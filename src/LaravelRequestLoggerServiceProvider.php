@@ -15,10 +15,7 @@ class LaravelRequestLoggerServiceProvider extends ServiceProvider
             $this->setupMigrations();
         }
 
-        Event::listen(
-            NewRequestEvent::class,
-            [LogNewRequestListener::class, 'handle']
-        );
+        Event::listen(NewRequestEvent::class, LogNewRequestListener::class);
     }
 
     public function register()
