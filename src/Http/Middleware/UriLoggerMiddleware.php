@@ -17,14 +17,14 @@ class UriLoggerMiddleware
 
         try {
             $data = [
-                'ip'     => $request->ip(),
-                'url'    => $request->fullUrl(),
+                'ip' => $request->ip(),
+                'url' => $request->fullUrl(),
                 'method' => $request->method(),
-                'input'  => json_encode($request->except([
+                'input' => json_encode($request->except([
                     'password',
                     'password_confirmation',
                 ])),
-                'headers'   => $request->headers,
+                'headers' => $request->headers,
                 'logged_at' => now()->toISOString(),
             ];
 

@@ -4,8 +4,8 @@ namespace Famdirksen\LaravelRequestLogger;
 
 use Famdirksen\LaravelRequestLogger\Events\NewRequestEvent;
 use Famdirksen\LaravelRequestLogger\Listeners\LogNewRequestListener;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
 
 class LaravelRequestLoggerServiceProvider extends ServiceProvider
 {
