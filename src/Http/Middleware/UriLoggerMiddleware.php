@@ -2,10 +2,10 @@
 
 namespace Famdirksen\LaravelRequestLogger\Http\Middleware;
 
+use Auth;
 use Closure;
 use Famdirksen\LaravelRequestLogger\Events\NewRequestEvent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UriLoggerMiddleware
 {
@@ -29,7 +29,7 @@ class UriLoggerMiddleware
             ];
 
             if (Auth::check()) {
-                $data['user_id'] = Auth::user()->id;
+                $data['user_id'] = Auth::user()->getAuthIdentifier();
             }
 
             // Dispatch the event after the response
