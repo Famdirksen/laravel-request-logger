@@ -2,7 +2,10 @@
 
 namespace Famdirksen\LaravelRequestLogger;
 
+use Famdirksen\LaravelRequestLogger\Events\NewRequestEvent;
+use Famdirksen\LaravelRequestLogger\Listeners\LogNewRequestListener;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Event;
 
 class LaravelRequestLoggerServiceProvider extends ServiceProvider
 {
@@ -11,11 +14,27 @@ class LaravelRequestLoggerServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->setupMigrations();
         }
+
+        Event::listen(
+            NewRequestEvent::class,
+            [LogNewRequestListener::class, 'handle']
+        );
     }
 
     public function register()
     {
-        //
+        $this->setupConfig();
+    }
+
+    protected function setupConfig()
+    {
+        $source = __DIR__.'/../config/request-logger.php';
+
+        $this->publishes([
+            $source => config_path('request-logger.php'),
+        ], 'config');
+
+        $this->mergeConfigFrom($source, 'request-logger');
     }
 
     protected function setupMigrations()

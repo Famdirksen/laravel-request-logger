@@ -12,10 +12,17 @@ class CreateRequestLogsTable extends Migration
     public function up()
     {
         Schema::create('request_logs', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('referral_account_id')->index();
-            $table->morphs('object');
+            $table->uuid('id')->primary();
+            $table->integer('user_id')->nullable()->index();
+            $table->string('ip');
+            $table->text('url');
+            $table->string('method');
+            $table->text('input');
+            $table->text('headers')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->index('created_at');
         });
     }
 
