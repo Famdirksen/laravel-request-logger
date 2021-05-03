@@ -31,6 +31,6 @@ class CreateRequestLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('referrals');
+        Schema::dropIfExists('request_logs');
     }
 }
