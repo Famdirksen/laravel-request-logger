@@ -51,6 +51,12 @@ class Kernel extends HttpKernel
 }
 ```
 
+Publish the migrations using:
+`php artisan vendor:publish --provider="Famdirksen\LaravelRequestLogger\LaravelRequestLoggerServiceProvider"`
+
+And migrate the database for storing the events.
+`php artisan migrate`
+
 ### Event handling
 The events are dispatched to the queue after the response is sent to the user. For the best performance of this job, use a queue worker to process the jobs.
 
