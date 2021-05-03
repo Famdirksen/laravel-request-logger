@@ -20,7 +20,7 @@ class LogNewRequestListener implements ShouldQueue
         try {
             $requestLog = new RequestLog();
 
-            if (isset($this->requestData['user_id'])) {
+            if (isset($event->requestData['user_id'])) {
                 $requestLog->user_id = $event->requestData['user_id'];
             }
 
@@ -30,6 +30,12 @@ class LogNewRequestListener implements ShouldQueue
             $requestLog->input = $event->requestData['input'];
             $requestLog->headers = $event->requestData['headers'];
             $requestLog->created_at = Carbon::parse($event->requestData['logged_at']);
+
+            if(isset($event->requestData['finished_at'])) {
+                $requestLog->duration = $requestLog->created_at->diffInMilliseconds(
+                    Carbon::parse($event->requestData['finished_at'])
+                );
+            }
 
             $requestLog->save();
         } catch (\Exception $exception) {
