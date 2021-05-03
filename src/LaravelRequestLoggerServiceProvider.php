@@ -2,6 +2,7 @@
 
 namespace Famdirksen\LaravelRequestLogger;
 
+use Famdirksen\LaravelRequestLogger\Commands\ClearRequestLogsCommand;
 use Famdirksen\LaravelRequestLogger\Events\NewRequestEvent;
 use Famdirksen\LaravelRequestLogger\Listeners\LogNewRequestListener;
 use Illuminate\Support\Facades\Event;
@@ -14,6 +15,10 @@ class LaravelRequestLoggerServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->setupMigrations();
         }
+
+        $this->commands([
+            ClearRequestLogsCommand::class,
+        ]);
 
         Event::listen(NewRequestEvent::class, LogNewRequestListener::class);
     }
