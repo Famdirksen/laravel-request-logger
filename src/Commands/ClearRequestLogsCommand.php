@@ -2,6 +2,7 @@
 
 namespace Famdirksen\LaravelRequestLogger\Commands;
 
+use Famdirksen\LaravelRequestLogger\Jobs\ClearRequestLogsJob;
 use Illuminate\Console\Command;
 
 class ClearRequestLogsCommand extends Command
