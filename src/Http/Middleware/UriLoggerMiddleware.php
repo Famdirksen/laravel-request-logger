@@ -20,10 +20,9 @@ class UriLoggerMiddleware
                 'ip' => $request->ip(),
                 'url' => $request->fullUrl(),
                 'method' => $request->method(),
-                'input' => json_encode($request->except([
-                    'password',
-                    'password_confirmation',
-                ])),
+                'input' => json_encode($request->except(
+                    config('request-logger.except-input', [])
+                )),
                 'headers' => $request->headers,
                 'logged_at' => now()->toISOString(),
             ];
@@ -32,8 +31,7 @@ class UriLoggerMiddleware
                 $data['user_id'] = Auth::user()->getAuthIdentifier();
             }
 
-            // Dispatch the event after the response
-            NewRequestEvent::dispatchAfterResponse($data);
+            event(new NewRequestEvent($data));
         } catch (\Exception $exception) {
             report($exception);
         }
