@@ -36,13 +36,11 @@ class LaravelRequestLoggerServiceProvider extends ServiceProvider
 
     protected function setupMigrations()
     {
-        $timestamp = date('Y_m_d_His');
-
         foreach ([
-            'create_request_logs_table',
+            '2021_05_03_100733_create_request_logs_table',
         ] as $file) {
             $migrationsSource = __DIR__."/../database/migrations/{$file}.php";
-            $migrationsTarget = database_path("/migrations/{$timestamp}_{$file}.php");
+            $migrationsTarget = database_path("/migrations/{$file}.php");
 
             $this->publishes([
                 $migrationsSource => $migrationsTarget,
