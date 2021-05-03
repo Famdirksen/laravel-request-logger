@@ -19,6 +19,8 @@ composer require famdirksen/laravel-request-logger
 
 ## Usage
 
+Note: this package could have a lot of impact on your database size/performance based on the amount of requests your application receives.
+
 This packages uses a middleware to log requests to the (at this moment the only support driver) database.
 
 ### Installation
