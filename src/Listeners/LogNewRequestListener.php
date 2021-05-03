@@ -9,6 +9,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class LogNewRequestListener implements ShouldQueue
 {
+    /**
+     * Handle the event.
+     *
+     * @param  \Famdirksen\LaravelRequestLogger\Events\NewRequestEvent  $event
+     * @return void
+     */
     public function handle(NewRequestEvent $event)
     {
         try {
@@ -29,5 +35,15 @@ class LogNewRequestListener implements ShouldQueue
         } catch (\Exception $exception) {
             report($exception);
         }
+    }
+
+    /**
+     * Get the name of the listener's queue.
+     *
+     * @return string
+     */
+    public function viaQueue()
+    {
+        return config('request-logger.queue', null);
     }
 }

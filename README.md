@@ -19,7 +19,48 @@ composer require famdirksen/laravel-request-logger
 
 ## Usage
 
-Todo...
+This packages uses a middleware to log requests to the (at this moment the only support driver) database.
+
+### Installation
+Add the `UriLoggerMiddleware` middleware to the route (or groups) you want to log.
+
+```php
+<?php
+
+namespace App\Http;
+
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
+
+class Kernel extends HttpKernel
+{
+    protected $middlewareGroups = [
+        'web' => [
+            'request_logger',
+            // ...
+        ],
+
+        'api' => [
+            'request_logger',
+            // ...
+        ],
+    ];
+    
+    protected $routeMiddleware = [
+        'request_logger' => \Famdirksen\LaravelRequestLogger\Http\Middleware\UriLoggerMiddleware::class,
+    ];
+}
+```
+
+### Event handling
+The events are dispatched to the queue after the response is sent to the user. For the best performance of this job, use a queue worker to process the jobs.
+
+### Disable logging
+When you want to disable logging, you can set the `REQUEST_LOGGER_ENABLED` variable to `false` in your `.env` file (ps, don't forget to clear your config cache `php artisan config:clear`).
+
+### Specify the queue
+It's possible to set a specific queue to run the request logger on. This can be done by setting the `REQUEST_LOGGER_QUEUE` variable in your `.env`. If no value is provided, it will use the default queue. 
+
+All new requests will be dispatched on the defined queue, but some may already be dispatched to the previous defined queue. To prevent loss of this data, you need to keep the old queue running until all jobs are processed. 
 
 ## Testing
 
