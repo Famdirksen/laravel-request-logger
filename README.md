@@ -57,6 +57,17 @@ Publish the migrations using:
 And migrate the database for storing the events.
 `php artisan migrate`
 
+### Clean the old records
+It's possible to clean the old request logs using a job. This job can be dispatched using your cronjob (via `php artisan schedule:run`).
+
+Add this command to your `app/Console/Kernel.php` to dispatch a new clear-request-logs command every hour:
+
+```php 
+$schedule->command(\Famdirksen\LaravelRequestLogger\Commands\ClearRequestLogsCommand::class)->hourly();
+```
+
+The job will delete the amount of request-logs based on your config. When the number of deleted records equals your limit, it will dispatch the job for the next xxx rows to delete. This method is used to prevent database lock. 
+
 ### Event handling
 The events are dispatched to the queue after the response is sent to the user. For the best performance of this job, use a queue worker to process the jobs.
 
