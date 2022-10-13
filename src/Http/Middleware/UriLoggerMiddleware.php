@@ -39,10 +39,10 @@ class UriLoggerMiddleware
         try {
             if (Auth::check()) {
                 $data['user_id'] = Auth::user()->getAuthIdentifier();
+                $data['user_type'] = get_class(Auth::user());
             }
 
             $data['route']['name'] = Route::currentRouteName();
-
             $data['finished_at'] = now();
         } catch (\Exception $exception) {
             report($exception);

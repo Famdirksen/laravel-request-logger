@@ -45,6 +45,7 @@ class LaravelRequestLoggerServiceProvider extends ServiceProvider
             '2021_05_03_100733_create_request_logs_table',
             '2021_05_03_133802_update_request_logs_table_for_request_duration_attribute',
             '2021_05_03_133802_update_request_logs_table_for_route_name_attribute',
+            '2022_10_13_133802_update_request_logs_table_for_user_type_attribute',
         ] as $file) {
             $migrationsSource = __DIR__."/../database/migrations/{$file}.php";
             $migrationsTarget = database_path("/migrations/{$file}.php");

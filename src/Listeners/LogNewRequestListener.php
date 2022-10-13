@@ -24,6 +24,12 @@ class LogNewRequestListener implements ShouldQueue
                 $requestLog->user_id = $event->requestData['user_id'];
             }
 
+            if(config('request-logger.store_user_type', false)) {
+                if (isset($event->requestData['user_type'])) {
+                    $requestLog->user_type = $event->requestData['user_type'];
+                }
+            }
+
             $requestLog->ip = $event->requestData['ip'];
             $requestLog->url = $event->requestData['url'];
             $requestLog->method = $event->requestData['method'];
