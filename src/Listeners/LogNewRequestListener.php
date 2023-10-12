@@ -37,6 +37,10 @@ class LogNewRequestListener implements ShouldQueue
             $requestLog->headers = $event->requestData['headers'];
             $requestLog->created_at = Carbon::parse($event->requestData['logged_at']);
 
+            if (isset($event->requestData['status_code'])) {
+                $requestLog->status_code = $event->requestData['status_code'];
+            }
+
             if (isset($event->requestData['route'])) {
                 if (isset($event->requestData['route']['name'])) {
                     $requestLog->route_name = $event->requestData['route']['name'];

@@ -44,6 +44,7 @@ class UriLoggerMiddleware
 
             $data['route']['name'] = Route::currentRouteName();
             $data['finished_at'] = now();
+            $data['status_code'] = $response->getStatusCode();
         } catch (\Exception $exception) {
             report($exception);
         }

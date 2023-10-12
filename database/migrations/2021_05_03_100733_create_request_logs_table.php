@@ -19,6 +19,7 @@ class CreateRequestLogsTable extends Migration
             $table->string('method');
             $table->text('input');
             $table->text('headers')->nullable();
+            $table->integer('status_code')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
