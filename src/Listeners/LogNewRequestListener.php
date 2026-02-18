@@ -23,7 +23,11 @@ class LogNewRequestListener implements ShouldQueue
             if (isset($event->requestData['user_id'])) {
                 $requestLog->user_id = $event->requestData['user_id'];
             }
-
+            
+            if (isset($event->requestData['api_token_id'])) {
+                $requestLog->api_token_id = $event->requestData['api_token_id'];
+            }
+            
             if(config('request-logger.store_user_type', false)) {
                 if (isset($event->requestData['user_type'])) {
                     $requestLog->user_type = $event->requestData['user_type'];

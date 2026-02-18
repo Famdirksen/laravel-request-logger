@@ -5,6 +5,9 @@ return [
     'queue' => env('REQUEST_LOGGER_QUEUE', null),
     'store_user_type' => env('REQUEST_LOGGER_STORE_USER_TYPE', false),
 
+    // Toggle to store the API Token ID (Sanctum/Passport)
+    'store_api_token_id' => env('REQUEST_LOGGER_STORE_API_TOKEN_ID', false),
+
     'clear-logs' => [
         'after-days' => 2,
         'limit' => 1000,
