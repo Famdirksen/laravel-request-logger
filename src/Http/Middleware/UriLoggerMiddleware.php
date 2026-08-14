@@ -44,6 +44,7 @@ class UriLoggerMiddleware
                 $data['user_type'] = get_class($user);
                 
                 $data['api_token_id'] = $this->getApiTokenId($user);
+                $data['passport_token_id'] = $this->getPassportTokenId($user);
             }
 
             $data['route']['name'] = Route::currentRouteName();
@@ -72,7 +73,6 @@ class UriLoggerMiddleware
      */
     private function getApiTokenId($user)
     {
-        // 1. Check config
         if (! config('request-logger.store_api_token_id', false)) {
             return null;
         }
@@ -81,14 +81,13 @@ class UriLoggerMiddleware
             return null;
         }
 
-        // 2. Check optional user method override
         if (method_exists($user, 'shouldStoreUsedApiToken')) {
             if (! $user->shouldStoreUsedApiToken()) {
                 return null;
             }
         }
 
-        // 3. Sanctum check
+        // Sanctum check
         if (method_exists($user, 'currentAccessToken')) {
             $token = $user->currentAccessToken();
 
@@ -97,7 +96,33 @@ class UriLoggerMiddleware
             }
         }
 
-        // 4. Passport check
+        return null;
+    }
+
+    /**
+     * Attempt to get the ID of the current Passport OAuth token, kept in its own
+     * column (see getApiTokenId()) so it can't collide with a Sanctum PAT id.
+     *
+     * Opt-in: returns null unless `request-logger.store_passport_token_id` is
+     * true. Existing consumers that never touch this config key see no change.
+     *
+     * @param  \Illuminate\Contracts\Auth\Authenticatable|mixed  $user
+     * @return string|null
+     */
+    private function getPassportTokenId($user)
+    {
+        if (! config('request-logger.store_passport_token_id', false)) {
+            return null;
+        }
+
+        if (! $user) {
+            return null;
+        }
+
+        if (method_exists($user, 'shouldStoreUsedApiToken') && ! $user->shouldStoreUsedApiToken()) {
+            return null;
+        }
+
         if (method_exists($user, 'token')) {
             $token = $user->token();
 

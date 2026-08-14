@@ -7,6 +7,7 @@ return [
 
     // Toggle to store the API Token ID (Sanctum/Passport)
     'store_api_token_id' => env('REQUEST_LOGGER_STORE_API_TOKEN_ID', false),
+    'store_passport_token_id' => env('REQUEST_LOGGER_STORE_PASSPORT_TOKEN_ID', false),
 
     'clear-logs' => [
         'after-days' => 2,
