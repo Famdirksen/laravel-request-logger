@@ -19,4 +19,18 @@ return [
         'password',
         'password_confirmation',
     ],
+
+    // These headers are still recorded, but their value is replaced with
+    // "[redacted]" BEFORE sending the event, so credentials never reach the
+    // request_logs table. Matching is case-insensitive.
+    //'redact-headers' => [
+    //    'authorization',
+    //    'proxy-authorization',
+    //    'cookie',
+    //    'set-cookie',
+    //    'x-api-key',
+    //    'x-auth-token',
+    //    'x-xsrf-token',
+    //    'php-auth-pw',
+    //],
 ];
